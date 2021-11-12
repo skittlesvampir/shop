@@ -49,7 +49,6 @@ msgid "Search Apps"
 msgstr "アプリを検索"
 
 #: src/MainWindow.vala:136
-#, fuzzy
 msgid "Search"
 msgstr "検索"
 
@@ -77,7 +76,7 @@ msgstr "インストール済み"
 
 #: src/MainWindow.vala:232
 msgid "Edit Software Sources…"
-msgstr ""
+msgstr "ソフトウェアのソースを編集…"
 
 #: src/Utils.vala:62 src/Core/ChangeInformation.vala:92
 msgid "Starting"
@@ -257,26 +256,25 @@ msgstr "%s の開発者"
 
 #: src/Core/Package.vala:339
 msgid "Pop!_Shop"
-msgstr ""
+msgstr "Pop!_Shop"
 
 #: src/Core/Package.vala:341
-#, fuzzy
 msgid "Ubuntu (deb)"
-msgstr "Ubuntu (キュレーションされていないアプリ)"
+msgstr "Ubuntu (deb パッケージ)"
 
 #: src/Core/Package.vala:343
 msgid "Pop!_OS (deb)"
-msgstr ""
+msgstr "Pop!_OS (deb パッケージ)"
 
 #: src/Core/Package.vala:348
-#, fuzzy, c-format
+#, c-format
 msgid "%s (system-wide flatpak)"
-msgstr "%s (全ユーザーが利用可能)"
+msgstr "%s (Flatpak、全ユーザーが利用可能)"
 
 #: src/Core/Package.vala:351
-#, fuzzy, c-format
+#, c-format
 msgid "%s (flatpak)"
-msgstr "%s (ローカル)"
+msgstr "%s (Flatpak)"
 
 #: src/Core/Package.vala:354 src/Core/Package.vala:375
 msgid "Ubuntu Drivers"
@@ -284,7 +282,7 @@ msgstr "Ubuntu ドライバー"
 
 #: src/Core/Package.vala:357
 msgid "Other (deb)"
-msgstr ""
+msgstr "そのほか (deb パッケージ)"
 
 #: src/Core/Package.vala:363
 msgid "elementary Updates"
@@ -397,6 +395,11 @@ msgid ""
 "• If the software supports multiple installation types, use the drop-down "
 "next to the Install button to select a different option and try again."
 msgstr ""
+"• Pop!_Shop の“インストール済み”タブで利用可能なアップデートをすべてインストールして、"
+"システムを再起動してからもう一度お試しください。\n"
+"\n"
+"• ソフトウェアが複数のインストール方法に対応している場合は、“インストール”ボタンの隣りにある"
+"ドロップダウンから別のオプションを選択して、もう一度お試しください。"
 
 #: src/Dialogs/InstallFailDialog.vala:36
 msgid ""
@@ -404,6 +407,9 @@ msgid ""
 "\n"
 "Try the following to resolve this error:\n"
 msgstr ""
+"アプリケーションをインストールできませんでした。\n"
+"\n"
+"エラーを解決するには以下をお試しください:\n"
 
 #: src/Dialogs/InstallFailDialog.vala:39
 #, c-format
@@ -412,15 +418,17 @@ msgid ""
 "\n"
 "Try the following to resolve this error:\n"
 msgstr ""
+"%s をインストールできませんでした。\n"
+"\n"
+"エラーを解決するには以下をお試しください:\n"
 
 #: src/Dialogs/InstallFailDialog.vala:43 src/Dialogs/UpdateFailDialog.vala:34
 msgid "Ignore"
 msgstr "無視"
 
 #: src/Dialogs/InstallFailDialog.vala:44
-#, fuzzy
 msgid "Check For Updates"
-msgstr "アップデートを確認しています"
+msgstr "アップデートを確認"
 
 #: src/Dialogs/NonCuratedWarningDialog.vala:27
 msgid "Non-Curated Warning"
@@ -831,7 +839,7 @@ msgstr ""
 
 #: src/Views/Homepage.vala:86
 msgid "Pop!_Picks"
-msgstr ""
+msgstr "おすすめ"
 
 #: src/Views/Homepage.vala:111
 msgid "Recently Updated"
