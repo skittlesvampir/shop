@@ -67,11 +67,13 @@
 
     protected override void get_preferred_height_for_width (int width, out int min, out int nat) {
         min = width * pixbuf_height / pixbuf_width;
+        min = min.clamp(0, 1000);
     nat = min;
     }
 
     protected override void get_preferred_width_for_height (int height, out int min, out int nat) {
         min = height * pixbuf_width / pixbuf_height;
+        min = min.clamp(0, 800);
     nat = min;
     }
 }
