@@ -42,11 +42,8 @@
         print("Screenshot pixbuf width: %i, height: %i", pixbuf_width, pixbuf_height);
         if (pixbuf == null)
             return Gdk.EVENT_PROPAGATE;
-        int height = get_allocated_height ();
-        int width = get_allocated_width ();
-        if (width > 800) {
-            width = 800;
-        }
+        int height = get_allocated_height ().clamp (0, 1000);
+        int width = get_allocated_width ().clamp (0, 800);
         double scale = double.min ((double) height / pixbuf_height, (double) width / pixbuf_width);
         cr.scale (scale, scale);
         Gdk.cairo_set_source_pixbuf (cr, pixbuf, 0, 0);
