@@ -39,6 +39,7 @@
     }
 
     protected override bool draw (Cairo.Context cr) {
+        print("Screenshot pixbuf width: %i, height: %i", pixbuf_width, pixbuf_height);
         if (pixbuf == null)
             return Gdk.EVENT_PROPAGATE;
         int height = get_allocated_height ();
