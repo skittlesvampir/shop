@@ -20,6 +20,7 @@
  public class AppCenter.Widgets.AppScreenshot : Gtk.DrawingArea {
     private string file_path;
     private Gdk.Pixbuf? pixbuf;
+    private Cairo.Surface? surface;
     private int pixbuf_width {
     get { return pixbuf != null ? pixbuf.width : 1; }
     }
@@ -38,42 +39,31 @@
         }
     }
 
+    public void get_cairo_surface () {
+        if (pixbuf != null) {
+            surface = Gdk.cairo_surface_create_from_pixbuf (pixbuf, 1, null);
+        }
+    }
+
+    private int get_useful_height () {
+        var alloc_width = get_allocated_width ();
+        return alloc_width / pixbuf_width * pixbuf_height;
+    }
+
+    private double get_scale_factor () {
+        return get_allocated_width () / pixbuf_width;
+    }
+
     protected override bool draw (Cairo.Context cr) {
-        print("Screenshot pixbuf width: %i, height: %i", pixbuf_width, pixbuf_height);
-        if (pixbuf == null)
+        get_cairo_surface ();
+        if (pixbuf == null && surface != null)
             return Gdk.EVENT_PROPAGATE;
-        int height = get_allocated_height ().clamp (0, 1000);
-        int width = get_allocated_width ().clamp (0, 800);
-        double scale = double.min ((double) height / pixbuf_height, (double) width / pixbuf_width);
+        var scale = get_scale_factor ();
         cr.scale (scale, scale);
-        Gdk.cairo_set_source_pixbuf (cr, pixbuf, 0, 0);
+        cr.set_source_surface (surface, 0, 0);
         cr.paint ();
+        var widget_height = get_useful_height ();
+        set_size_request (-1, widget_height);
         return Gdk.EVENT_PROPAGATE;
-    }
-
-    protected override Gtk.SizeRequestMode get_request_mode () {
-        return Gtk.SizeRequestMode.HEIGHT_FOR_WIDTH;
-    }
-
-    protected override void get_preferred_width (out int min, out int nat) {
-    min = 0;
-    nat = pixbuf_width;
-    }
-
-    protected override void get_preferred_height (out int min, out int nat) {
-    min = 0;
-    nat = pixbuf_height;
-    }
-
-    protected override void get_preferred_height_for_width (int width, out int min, out int nat) {
-        min = width * (pixbuf_height / pixbuf_width);
-        min = min.clamp(0, 1000);
-    nat = min;
-    }
-
-    protected override void get_preferred_width_for_height (int height, out int min, out int nat) {
-        min = height * (pixbuf_width / pixbuf_height);
-        min = min.clamp(0, 800);
-    nat = min;
     }
 }

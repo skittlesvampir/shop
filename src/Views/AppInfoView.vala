@@ -951,11 +951,11 @@ namespace AppCenter.Views {
                         * navigation to make it look/work like a single
                         * screenshot.
                         */
-                        //  if (number_of_screenshots == 1) {
-                        //      load_screenshot (screenshot_files[0]);
-                        //      app_screenshots.interactive = false;
-                        //      screenshot_switcher.visible = false;
-                        //  }
+                        if (number_of_screenshots == 1) {
+                            load_screenshot (screenshot_files[0]);
+                            app_screenshots.interactive = false;
+                            screenshot_switcher.visible = false;
+                        }
                     } else {
                         screenshot_stack.visible_child = app_screenshot_not_found;
                         stack_context.remove_class ("loading");
