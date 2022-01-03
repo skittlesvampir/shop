@@ -17,79 +17,58 @@
  *
  * Authored by: Ian Santopietro <ian@system76.com>
  */
- public class AppCenter.Widgets.AppScreenshot : Gtk.DrawingArea {
-    private string file_path;
-    private Gdk.Pixbuf? pixbuf;
-    private Cairo.Surface? surface;
-    private int pixbuf_width {
-    get { return pixbuf != null ? pixbuf.width : 1; }
-    }
-    private int pixbuf_height {
-    get { return pixbuf != null ? pixbuf.height : 1; }
-    }
 
+public class AppCenter.Widgets.AppScreenshot : Gtk.DrawingArea {
+    private string file_path;
+    private double aspect_ratio;
+    private Gdk.Pixbuf? pixbuf;
+    private int pixbuf_height;
+    
+    construct {
+        hexpand = true;
+        halign = Gtk.Align.FILL;
+    }
+    
     public void set_path (string path_text) {
+        int width, height;
         file_path = path_text;
+        Gdk.Pixbuf.get_file_info (file_path, out width, out height);
+        aspect_ratio = (double) width / height;
         try {
             pixbuf = new Gdk.Pixbuf.from_file (file_path);
+            pixbuf_height = height;
         }
         catch (Error e) {
             critical ("Couldn't load pixbuf: %s", e.message);
             pixbuf = null;
         }
     }
-
-    public void get_cairo_surface () {
-        if (pixbuf != null) {
-            surface = Gdk.cairo_surface_create_from_pixbuf (pixbuf, 1, null);
-        }
-    }
-
-    private int get_useful_height () {
-        var alloc_width = get_allocated_width ();
-        return alloc_width / pixbuf_width * pixbuf_height;
-    }
-
-    private double get_scale_factor () {
-        return get_allocated_width () / pixbuf_width;
-    }
-
+    
     protected override bool draw (Cairo.Context cr) {
-        get_cairo_surface ();
-        if (pixbuf == null && surface != null)
+        if (pixbuf == null)
             return Gdk.EVENT_PROPAGATE;
-        var scale = get_scale_factor ();
+        int height = get_allocated_height ();
+        double scale = (double) height / pixbuf_height;
         cr.scale (scale, scale);
-        cr.set_source_surface (surface, 0, 0);
+        Gdk.cairo_set_source_pixbuf (cr, pixbuf, 0, 0);
         cr.paint ();
-        var widget_height = get_useful_height ();
-        set_size_request (-1, widget_height);
         return Gdk.EVENT_PROPAGATE;
     }
-
+    
     protected override Gtk.SizeRequestMode get_request_mode () {
         return Gtk.SizeRequestMode.HEIGHT_FOR_WIDTH;
     }
-
-    protected override void get_preferred_width (out int min, out int nat) {
-    min = 0;
-    nat = pixbuf_width;
-    }
-
+    
     protected override void get_preferred_height (out int min, out int nat) {
-    min = 0;
-    nat = pixbuf_height;
+        get_preferred_height_for_width (
+            get_allocated_width (),
+            out min,
+            out nat
+        );
     }
-
+    
     protected override void get_preferred_height_for_width (int width, out int min, out int nat) {
-        min = width * (pixbuf_height / pixbuf_width);
-        min = min.clamp(0, 1000);
-    nat = min;
-    }
-
-    protected override void get_preferred_width_for_height (int height, out int min, out int nat) {
-        min = height * (pixbuf_width / pixbuf_height);
-        min = min.clamp(0, 800);
-    nat = min;
+        double val = width / aspect_ratio;
+        min = nat = (int) val;
     }
 }
