@@ -51,29 +51,29 @@
         return Gdk.EVENT_PROPAGATE;
     }
 
-    //  protected override Gtk.SizeRequestMode get_request_mode () {
-    //      return Gtk.SizeRequestMode.HEIGHT_FOR_WIDTH;
-    //  }
+    protected override Gtk.SizeRequestMode get_request_mode () {
+        return Gtk.SizeRequestMode.HEIGHT_FOR_WIDTH;
+    }
 
-    //  protected override void get_preferred_width (out int min, out int nat) {
-    //  min = 0;
-    //  nat = pixbuf_width;
-    //  }
+    protected override void get_preferred_width (out int min, out int nat) {
+    min = 0;
+    nat = pixbuf_width;
+    }
 
-    //  protected override void get_preferred_height (out int min, out int nat) {
-    //  min = 0;
-    //  nat = pixbuf_height;
-    //  }
+    protected override void get_preferred_height (out int min, out int nat) {
+    min = 0;
+    nat = pixbuf_height;
+    }
 
-    //  protected override void get_preferred_height_for_width (int width, out int min, out int nat) {
-    //      min = width * (pixbuf_height / pixbuf_width);
-    //      min = min.clamp(0, 1000);
-    //  nat = min;
-    //  }
+    protected override void get_preferred_height_for_width (int width, out int min, out int nat) {
+        min = width * (pixbuf_height / pixbuf_width);
+        min = min.clamp(0, 1000);
+    nat = min;
+    }
 
-    //  protected override void get_preferred_width_for_height (int height, out int min, out int nat) {
-    //      min = height * (pixbuf_width / pixbuf_height);
-    //      min = min.clamp(0, 800);
-    //  nat = min;
-    //  }
+    protected override void get_preferred_width_for_height (int height, out int min, out int nat) {
+        min = height * (pixbuf_width / pixbuf_height);
+        min = min.clamp(0, 800);
+    nat = min;
+    }
 }
